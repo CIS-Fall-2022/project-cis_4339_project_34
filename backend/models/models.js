@@ -16,6 +16,10 @@ let primaryDataSchema = new Schema({
         type: String,
         required: true
     },
+    organization: {
+        type: String,
+        require: true
+    },
     email: {
         type: String
     },
@@ -53,6 +57,10 @@ let eventDataSchema = new Schema({
         type: String,
         require: true
     },
+    organization: {
+         type: String,
+         require: true
+    },
     services: {
         type: Array
     },
@@ -87,9 +95,23 @@ let eventDataSchema = new Schema({
     collection: 'eventData'
 });
 
+
+let organizationDataschema = new Schema({
+    _id: { type: String, default: uuid.v1 },
+    organizationName: {
+        type: String,
+        require: true
+    }, 
+        collection: 'organizationData'
+    }
+    )
+
+
 // create models from mongoose schemas
 const primarydata = mongoose.model('primaryData', primaryDataSchema);
 const eventdata = mongoose.model('eventData', eventDataSchema);
 
 // package the models in an object to export 
 module.exports = { primarydata, eventdata }
+
+
