@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 //importing data model schemas
-let { eventdata } = require("../models/models"); 
+const eventModel = require("../models/event");
 
 //GET all entries
-router.get("/", (req, res, next) => { 
-    eventdata.find( 
+router.get("/allevents/", (req, res, next) => { 
+    eventModel.find( 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -18,8 +18,8 @@ router.get("/", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/id/:id", (req, res, next) => { 
-    eventdata.find({ _id: req.params.id }, (error, data) => {
+router.get("/eventid/:id", (req, res, next) => { 
+    eventModel.find({ _id: req.params.id }, (error, data) => {
         if (error) {
             return next(error)
         } else {
@@ -39,7 +39,7 @@ router.get("/search/", (req, res, next) => {
             date:  req.query["eventDate"]
         }
     };
-    eventdata.find( 
+    eventModel.find( 
         dbQuery, 
         (error, data) => { 
             if (error) {
@@ -53,7 +53,7 @@ router.get("/search/", (req, res, next) => {
 
 //GET events for which a client is signed up
 router.get("/client/:id", (req, res, next) => { 
-    eventdata.find( 
+    eventModel.find( 
         { attendees: req.params.id }, 
         (error, data) => { 
             if (error) {
@@ -66,8 +66,8 @@ router.get("/client/:id", (req, res, next) => {
 });
 
 //POST
-router.post("/", (req, res, next) => { 
-    eventdata.create( 
+router.post("/addevent/", (req, res, next) => { 
+    eventModel.create( 
         req.body, 
         (error, data) => { 
             if (error) {
@@ -81,7 +81,7 @@ router.post("/", (req, res, next) => {
 
 //PUT
 router.put("/:id", (req, res, next) => {
-    eventdata.findOneAndUpdate(
+    eventModel.findOneAndUpdate(
         { _id: req.params.id },
         req.body,
         (error, data) => {
@@ -97,14 +97,14 @@ router.put("/:id", (req, res, next) => {
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
-    eventdata.find( 
+    eventModel.find( 
         { _id: req.params.id, attendees: req.body.attendee }, 
         (error, data) => { 
             if (error) {
                 return next(error);
             } else {
                 if (data.length == 0) {
-                    eventdata.updateOne(
+                    eventModel.updateOne(
                         { _id: req.params.id }, 
                         { $push: { attendees: req.body.attendee } },
                         (error, data) => {
@@ -122,6 +122,21 @@ router.put("/addAttendee/:id", (req, res, next) => {
         }
     );
     
+});
+
+//DELETE pdata by _id
+router.delete('/:id', (req, res, next) => {
+    //mongoose will use _id of document
+    eventModel.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+            //  res.send('event is deleted');
+        }
+    });
 });
 
 module.exports = router;
