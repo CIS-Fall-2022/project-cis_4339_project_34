@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "998fe548-8de2-4cfe-991f-6502e3264160",
+		"name": "Sprint 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19822555"
+	},
+	"item": [
+		{
+			"name": "Organization POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orgid\": 61,\r\n    \"organizationName\": \"University of Houston\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/addorg/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"addorg",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Organization All GET",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Organization GET 1 ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Organization Put",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Organization Delete",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "PrimaryData All GET",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "PrimaryData POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": 78,\r\n    \"firstName\": \"John\",\r\n    \"middleName\": \"Connor\",\r\n    \"lastName\": \"Doe\",\r\n    \"organization\": \"University of Houston\",\r\n    \"email\": \"jdoe@uh.edu\",\r\n    \"phoneNumbers\": [\"123456789\",\"987654321\"],\r\n    \"address\": {\"line1\": \"1234\", \"line2\": \"Street Road\", \"city\": \"Houston\", \"county\":\"Harris\", \"zip\":\"79984\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/primarydata/addpdata/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"primarydata",
+						"addpdata",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Primarydata PUT",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Primarydata DELETE",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Event All GET",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Event Get1 Client ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Event POST",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Event PUT",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Event DELETE",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
