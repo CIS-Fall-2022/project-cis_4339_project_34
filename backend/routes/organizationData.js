@@ -45,28 +45,6 @@ router.get('/:id', (req, res, next) => {
 });
 
 
-//GET events for a single client
-router.get("/organization/:id", (req, res, next) => { 
-    
-});
-
-//POST
-router.post("/addorg/", (req, res, next) => { 
-    organizationModel.create( 
-        req.body,
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data); 
-            }
-        }
-    );
-    organizationModel.createdAt;
-    organizationModel.updatedAt;
-    organizationModel.createdAt instanceof Date;
-});
-
 //PUT update (make sure req body doesn't have the id)
 router.put("/:id", (req, res, next) => { 
     organizationModel.findOneAndUpdate( 
