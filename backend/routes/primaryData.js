@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router(); 
 
 //importing data model schemas
-let { primarydata } = require("../models/models"); 
-let { eventdata } = require("../models/models"); 
+const primaryModel = require("../models/primaryd");
 
 //GET all entries
-router.get("/", (req, res, next) => { 
-    primarydata.find( 
+router.get("/allpdata/", (req, res, next) => { 
+    primaryModel.find( 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -19,8 +18,8 @@ router.get("/", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
+router.get("/pdataid/:id", (req, res, next) => {
+    primaryModel.find( 
         { _id: req.params.id }, 
         (error, data) => {
             if (error) {
@@ -43,7 +42,7 @@ router.get("/search/", (req, res, next) => {
             "phoneNumbers.primaryPhone": { $regex: `^${req.query["phoneNumbers.primaryPhone"]}`, $options: "i" }
         }
     };
-    primarydata.find( 
+    primaryModel.find( 
         dbQuery, 
         (error, data) => { 
             if (error) {
@@ -56,13 +55,13 @@ router.get("/search/", (req, res, next) => {
 });
 
 //GET events for a single client
-router.get("/events/:id", (req, res, next) => { 
+router.get("/pdata/:id", (req, res, next) => { 
     
 });
 
 //POST
-router.post("/", (req, res, next) => { 
-    primarydata.create( 
+router.post("/addpdata", (req, res, next) => { 
+    primaryModel.create( 
         req.body,
         (error, data) => { 
             if (error) {
@@ -72,14 +71,14 @@ router.post("/", (req, res, next) => {
             }
         }
     );
-    primarydata.createdAt;
-    primarydata.updatedAt;
-    primarydata.createdAt instanceof Date;
+    primaryModel.createdAt;
+    primaryModel.updatedAt;
+    primaryModel.createdAt instanceof Date;
 });
 
 //PUT update (make sure req body doesn't have the id)
 router.put("/:id", (req, res, next) => { 
-    primarydata.findOneAndUpdate( 
+    primaryModel.findOneAndUpdate( 
         { _id: req.params.id }, 
         req.body,
         (error, data) => {
@@ -90,6 +89,21 @@ router.put("/:id", (req, res, next) => {
             }
         }
     );
+});
+
+//DELETE pdata by _id
+router.delete('/:id', (req, res, next) => {
+    //mongoose will use _id of document
+    primaryModel.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+            //  res.send('pdata is deleted');
+        }
+    });
 });
 
 module.exports = router;
