@@ -96,7 +96,7 @@ router.put("/:id", (req, res, next) => {
 
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
-    //only add attendee if not yet signed uo
+    //only add attendee if not yet signed up
     eventModel.find( 
         { _id: req.params.id, attendees: req.body.attendee }, 
         (error, data) => { 
