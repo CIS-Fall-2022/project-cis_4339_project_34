@@ -5,7 +5,7 @@ const router = express.Router();
 let { primarydata } = require("../models/models"); 
 let { eventdata } = require("../models/models"); 
 
-//GET all entries
+//GET all entrie
 router.get("/", (req, res, next) => { 
     primarydata.find( 
         (error, data) => {
