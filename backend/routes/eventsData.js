@@ -17,6 +17,19 @@ router.get("/allevents/", (req, res, next) => {
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
+//GET all entries in the past 2 months
+router.get("/recentevents/", (req, res, next) => { 
+    eventModel.find( 
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    ).sort({ 'updatedAt': -1 }).limit(10);
+});
+
 //GET single entry by ID
 router.get("/eventid/:id", (req, res, next) => { 
     eventModel.find({ _id: req.params.id }, (error, data) => {
@@ -54,7 +67,7 @@ router.get("/search/", (req, res, next) => {
 //GET events for which a client is signed up
 router.get("/client/:id", (req, res, next) => { 
     eventModel.find( 
-        { attendees: req.params.id }, 
+        { _id: req.params.id, attendees: req.body.attendee }, 
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -138,5 +151,7 @@ router.delete('/:id', (req, res, next) => {
         }
     });
 });
+
+
 
 module.exports = router;
