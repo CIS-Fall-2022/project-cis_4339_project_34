@@ -19,16 +19,26 @@ router.get("/allevents/", (req, res, next) => {
 
 //GET all entries in the past 2 months
 router.get("/recentevents/", (req, res, next) => { 
-    eventModel.find( 
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
+    eventModel.aggregate([
+        { $project: { eventName: 1, date: 1 } },
+        {
+            $lookup: {
+                from: 'eventsData',
+                localField: 'date',
+                foreignField: 'eventName',
+                as: 'eventsDates'
             }
         }
-    ).sort({ 'updatedAt': -1 }).limit(10);
+    ], (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data);
+        }
+    });
 });
+
+
 
 //GET single entry by ID
 router.get("/eventid/:id", (req, res, next) => { 
