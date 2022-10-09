@@ -66,16 +66,24 @@ router.get("/search/", (req, res, next) => {
 
 //GET events for which a client is signed up
 router.get("/client/:id", (req, res, next) => { 
-    eventModel.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
+    eventModel.aggregate([
+        { $match: { _id: req.params.id } },
+        { $project: { _id: 1, attendees: 1 } },
+        {
+            $lookup: {
+                from: 'eventsData',
+                localField: '_id',
+                foreignField: 'attendee',
+                as: 'eventsData'
             }
         }
-    );
+    ], (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data);
+        }
+    });
 });
 
 //POST
