@@ -20,7 +20,7 @@ router.get("/allevents/", (req, res, next) => {
 //GET all entries in the past 2 months
 router.get("/recentevents/", (req, res, next) => { 
     eventModel.aggregate([
-        { $project: { eventName: 1, date: 1 } },
+        { $project: { _id: 0, eventName: 1, date: 1 } },
         {
             $lookup: {
                 from: 'eventsData',
