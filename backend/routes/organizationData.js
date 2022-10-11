@@ -6,7 +6,6 @@ let { organizationdata } = require("../models/models");
 
 //GET organization by name
 router.get("/organization/:name", (req, res, next) => { 
-    console.log("organization hit:", req.params.name)
     organizationdata.findOne( 
         {organizationName:req.params.name},
         (error, data) => {

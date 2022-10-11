@@ -57,12 +57,13 @@ let eventDataSchema = new Schema({
         type: String,
         require: true
     },
-    organization: {
-         type: String,
+    organization: {  
+         type: Schema.Types.ObjectId,
+         ref: 'organizationData' ,
          require: true
     },
     services: {
-        type: Array
+        type: [String]     
     },
     date: {
         type: Date,
