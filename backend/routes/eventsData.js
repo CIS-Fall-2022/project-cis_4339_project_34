@@ -128,5 +128,26 @@ router.delete("/:id", (req, res, next) => {
         }
     )
 });
-
+ 
+//GET all event past 2 months
+router.get("/totalAttendees", (req, res, next) => { 
+    const currentdate = new Date(Date.now())
+    const currentmonth = currentdate.getMonth()
+    const pastdate = new Date(currentdate)
+    pastdate.setMonth(currentmonth - 2)
+    eventdata.aggregate([
+       {$match: {date:{$gte:pastdate}}}, // filter query
+       {$project: {attendeeSize: {$size: "$attendees"}}},
+       {$group: {_id: null, totalAttendees: {$sum: "$attendeeSize"}}} // project query
+    ]).exec(
+        (error, data) => {
+            console.log(data)
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
+});
 module.exports = router;

@@ -31,7 +31,7 @@ router.get("/", (req, res, next) => {
     ).sort({ 'organizationName': -1 }).limit(10)
 });
 
-//POST
+//POST create a orgainzation
 router.post("/", (req, res, next) => { 
     organizationdata.create( 
         req.body, 
@@ -45,7 +45,7 @@ router.post("/", (req, res, next) => {
     );
 });
 
-//PUT
+//PUT update organzation by name
 router.put("/:name", (req, res, next) => {
     organizationdata.findOneAndUpdate(
         { organizationName: req.params.name },
@@ -60,7 +60,7 @@ router.put("/:name", (req, res, next) => {
     );
 });
 
-//DELETE
+//DELETE an orgainzation
 router.delete("/:name", (req, res, next) => { 
     organizationdata.deleteOne(
         {organizationName:req.params.name} ,
