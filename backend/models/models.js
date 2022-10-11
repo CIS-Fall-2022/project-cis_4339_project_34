@@ -16,15 +16,16 @@ let primaryDataSchema = new Schema({
         type: String,
         required: true
     },
-    organization: {
-        type: String,
-        require: true
+        organization: {  
+            type: String,
+            ref: 'organizationData' ,
+            require: true
     },
     email: {
         type: String
     },
     phoneNumbers: {
-        type: Array,
+        type: [String],
         required: true
     },
     address: {
@@ -58,7 +59,7 @@ let eventDataSchema = new Schema({
         require: true
     },
     organization: {  
-         type: Schema.Types.ObjectId,
+         type: String,
          ref: 'organizationData' ,
          require: true
     },
@@ -89,10 +90,9 @@ let eventDataSchema = new Schema({
     description: {
         type: String,
     },
-    attendees: [{
-        type: String
-    }]
-}, {
+    attendees: {
+        type: [String]
+    }}, {
     collection: 'eventData'
 });
 

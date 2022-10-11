@@ -7,7 +7,7 @@ let { eventdata } = require("../models/models");
 //GET all entries
 router.get("/", (req, res, next) => { 
     eventdata.find()
-    .populate("organization")
+    .populate('organization')
     .sort({ 'updatedAt': -1 })
     .limit(10).exec( 
         (error, data) => {
@@ -101,31 +101,32 @@ router.put("/:id", (req, res, next) => {
 //PUT add attendee to event
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
-    eventdata.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
+    eventdata.updateOne(
+        { _id: req.params.id }, 
+        { $push: { attendees: req.body.attendee } },
+        (error, data) => {
+            console.log(data)
             if (error) {
                 return next(error);
             } else {
-                if (data.length == 0) {
-                    eventdata.updateOne(
-                        { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
-                        (error, data) => {
-                            if (error) {
-                                consol
-                                return next(error);
-                            } else {
-                                res.json(data);
-                            }
-                        }
-                    );
-                }
-                
+                res.json(data);
             }
         }
     );
-    
+});
+
+//DELETE
+router.delete("/:id", (req, res, next) => { 
+    eventdata.deleteOne(
+        {_id:req.params.id} ,
+        (error, data) => {
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    )
 });
 
 module.exports = router;
