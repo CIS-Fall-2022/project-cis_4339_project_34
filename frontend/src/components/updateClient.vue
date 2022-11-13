@@ -57,9 +57,9 @@ export default {
         this.client.lastName = data.lastName;
         this.client.email = data.email;
         this.client.phoneNumbers[0].primaryPhone =
-          data.phoneNumbers[0].primaryPhone;
+          data.phoneNumbers[0];
         this.client.phoneNumbers[0].secondaryPhone =
-          data.phoneNumbers[0].secondaryPhone;
+          data.phoneNumbers[1]||"";
         this.client.address.line1 = data.address.line1;
         this.client.address.line2 = data.address.line2;
         this.client.address.city = data.address.city;
@@ -99,6 +99,15 @@ export default {
       let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
+        this.$router.back().catch((error) => {
+          console.log(error);
+        });
+      });
+    },
+    handleClientDelete() {
+      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
+      axios.delete(apiURL, this.client).then(() => {
+        alert("Client has been deleted.");
         this.$router.back().catch((error) => {
           console.log(error);
         });
@@ -331,6 +340,13 @@ export default {
               type="submit"
               class="bg-red-700 text-white rounded"
             >Update Client</button>
+          </div>
+          <div class="flex justify-between mt-10 mr-20">
+            <button
+              @click="handleClientDelete"
+              type="submit"
+              class="bg-red-700 text-white rounded"
+            >Delete Client</button>
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button

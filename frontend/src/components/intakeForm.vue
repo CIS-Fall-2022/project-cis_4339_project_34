@@ -39,8 +39,12 @@ export default {
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
         let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
+        const payload = {
+        ...this.client,
+        phoneNumbers: [String(this.client.phoneNumbers[0].primaryPhone), String(this.client.phoneNumbers[0].secondaryPhone)]
+        }
         axios
-          .post(apiURL, this.client)
+          .post(apiURL, payload)
           .then(() => {
             alert("Client has been succesfully added.");
             this.$router.push("/findclient");
@@ -52,7 +56,7 @@ export default {
               phoneNumbers: [
                 {
                   primaryPhone: "",
-                  seondaryPhone: "",
+                  secondaryPhone: "",
                 },
               ],
               address: {
