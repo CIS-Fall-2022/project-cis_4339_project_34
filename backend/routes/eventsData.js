@@ -6,7 +6,7 @@ let { eventdata } = require("../models/models");
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    eventdata.find()
+    eventdata.find({organization:process.env.ORGANIZATION})
     .populate('organization')
     .sort({ 'updatedAt': -1 })
     .limit(10).exec( 
@@ -71,8 +71,9 @@ router.get("/client/:id", (req, res, next) => {
 
 //POST
 router.post("/", (req, res, next) => { 
+    const newbody={...req.body,organization:process.env.ORGANIZATION}
     eventdata.create( 
-        req.body, 
+        newbody, 
         (error, data) => { 
             if (error) {
                 return next(error);

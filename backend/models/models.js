@@ -45,8 +45,10 @@ let primaryDataSchema = new Schema({
         zip: {
             type: String,
         }
-    }
-}, {
+    },
+    
+    }, 
+    {
     collection: 'primaryData',
     timestamps: true
 });

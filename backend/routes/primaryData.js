@@ -9,6 +9,7 @@ let { organizationdata } = require("../models/models")
 //GET all entries
 router.get("/", (req, res, next) => { 
     primarydata.find( 
+    {organization:process.env.ORGANIZATION},
         (error, data) => {
             if (error) {
                 return next(error);
@@ -63,8 +64,9 @@ router.get("/events/:id", (req, res, next) => {
 
 //POST
 router.post("/", (req, res, next) => { 
+    const newbody={...req.body,organization:process.env.ORGANIZATION}
     primarydata.create( 
-        req.body,
+        newbody,
         (error, data) => { 
             if (error) {
                 return next(error);
