@@ -75,7 +75,7 @@
             <tr @click="editEvent(event._id)" v-for="event in queryData" :key="event._id">
               <td class="p-2 text-left">{{ event.eventName }}</td>
               <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="p-2 text-left">{{ event.address?.line1??""}}</td>
             </tr>
           </tbody>
         </table>
@@ -101,6 +101,7 @@ export default {
     let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/`;
     this.queryData = [];
     axios.get(apiURL).then((resp) => {
+      console.log(resp)
       this.queryData = resp.data;
     });
     window.scrollTo(0, 0);
@@ -134,6 +135,7 @@ export default {
       let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/`;
       this.queryData = [];
       axios.get(apiURL).then((resp) => {
+      
         this.queryData = resp.data;
       });
     },
