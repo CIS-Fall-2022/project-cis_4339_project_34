@@ -288,7 +288,6 @@ export default {
       .then((resp) => {
         let data = resp.data[0];
         this.event.eventName = data.eventName;
-        console.log(data.date);
         this.event.date = DateTime.fromISO(data.date).plus({ days: 1 }).toISODate();
         this.event.description = data.description;
         this.checkedServices = data.services;
@@ -323,18 +322,18 @@ export default {
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          alert(error.message);
         });
-      });
+      }).catch(error=>alert(error.message));
     },
     handleEventDelete() {
       let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.delete(apiURL).then(() => {
         alert("Event has beeen Deleted.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          alert(error.message)
         });
-      });
+      }).catch(error=>alert(error.message));
     },
     editClient(clientID) {
       this.$router.push({ name: "updateclient", params: { id: clientID } });
